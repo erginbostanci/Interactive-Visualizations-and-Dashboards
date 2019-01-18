@@ -4,7 +4,7 @@ function buildMetadata(sample) {
   // I'm certain it can be done, I just am not skilled enough to figure out what I was missing to make that work
 
   // @TODO: Complete the following function that builds the metadata panel
-  var url = "/metadata/" + sample;
+  var url = `/metadata/${sample}`;
   console.log(url);
 
   d3.json(url).then(function(response) {
@@ -36,46 +36,46 @@ function buildMetadata(sample) {
 
     // BONUS: Build the Gauge Chart
     // buildGauge(data.WFREQ);
-  }};
+  })};
 
 function buildCharts(sample) {
   var url = `/samples/${sample}`;
   // @TODO: Use `d3.json` to fetch the sample data for the plots
   d3.json(url).then(function(data) {
     console.log(url);
+    console.log(data);
     // @TODO: Build a Bubble Chart using the sample data
-    var trace1 = [(
+    var trace1 = [{
       y: data.sample_values,
       x: data.otu_ids,
       text: data.otu_labels,
       mode: "markers",
       marker: {
         size: data.sample_values,
-        color: data.otu_ids;
-      };
-    )];
+        color: data.otu_ids
+      }
+    }];
     var layout1 = {
-      xaxis: {title: {text: "OTU IDS"}},
-      yaxis: {title: {text: "Sampel Values"}},
+      xaxis: {title: {text: "OTU IDs"}},
+      yaxis: {title: {text: "Sample Values"}},
       sort: true,
     };
-    Plotly.newPlot("bubble",trace1,layout1);
+    Plotly.newPlot("bubble", trace1, layout1);
 
     // @TODO: Build a Pie Chart
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
     var trace2 = [{
-      values: data.sample_values.slice(0,10),
-      labels: data.otu_ids.slice(0,10),
+      values: data.sample_values.sort(function(a, b) {return b-a}).slice(0,10),
+      labels: data.sample_values.sort(function(a, b) {return b-a}).slice(0,10),
       type: "pie",
       sort: true
     }];
-    var layout = {
+    var layout2 = {
       title: "The Top 10 Samples",
     };
-    Plotly.newPlot("pie",trace2,layout2);
-  };
-  )};
+    Plotly.newPlot("pie", trace2, layout2);
+  })};
 
 function init() {
   // Grab a reference to the dropdown select element
