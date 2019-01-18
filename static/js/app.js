@@ -67,7 +67,7 @@ function buildCharts(sample) {
     // otu_ids, and labels (10 each).
     var trace2 = [{
       values: data.sample_values.sort(function(a, b) {return b-a}).slice(0,10),
-      labels: data.sample_values.sort(function(a, b) {return b-a}).slice(0,10),
+      labels: data.otu_ids.slice(0,10),
       type: "pie",
       sort: true
     }];
